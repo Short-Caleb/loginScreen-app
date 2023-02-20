@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { Text, View, StyleSheet, Button, TextInput} from 'react-native'
+import { Text, View, StyleSheet, Button, TextInput, ScrollView} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Login = () => {
@@ -16,24 +16,25 @@ const Login = () => {
     async function restoreInfo() {
         let permaInfo;
         permaInfo = await getInfo();
-        if (permaInfo === null) return { FName: '', LName: '', Email: '', Password: ''};
+        if (permaInfo === null || permaInfo === {}) return { FName: '', LName: '', Email: '', Password: ''};
         
         setProfileInfo(permaInfo);
         console.log(permaInfo)
     }
     
     restoreInfo();
- })
+ },  []);
  
  
  const addProfile = () => {
     setProfileInfo({ FName: userFName, LName: userLName, Email: userEmail, Password: userPassword});
 
+    
+    storeInfo();
     console.log(profileInfo.FName)
     console.log(profileInfo.LName)
     console.log(profileInfo.Email)
     console.log(profileInfo.Password)
-    storeInfo();
  }
  
 
@@ -54,7 +55,7 @@ const Login = () => {
             if (jsonValue === null)  return null;
             return jsonValue != null ? JSON.parse(jsonValue) : null;  
         } catch(e) {
-     
+            const seedInfo = { FName: '', LName: '', Email: '', Password: ''}
             const jsonValue = JSON.stringify(seedInfo)
             console.log(jsonValue)
             await AsyncStorage.setItem('@storage_Key', jsonValue)
@@ -67,25 +68,30 @@ const Login = () => {
     return (
     <View>
         <Text>is anything working </Text>
+        <Text>FIRST NAME</Text>
         <TextInput
             style={styles.inputs}
             editable
             onChangeText={setUserFName}
             value={userFName}
             />
+            <Text>LAST NAME</Text>
         <TextInput
             style={styles.inputs}
             editable
             onChangeText={setUserLName}
             value={userLName}
             />
+            <Text>EMAIL</Text>
         <TextInput
             style={styles.inputs}
             editable
             onChangeText={setUserEmail}
             value={userEmail}
             />
+            <Text>PASSWORD</Text>
         <TextInput
+            
             style={styles.inputs}
             editable
             onChangeText={setUserPassword}
