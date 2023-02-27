@@ -72,8 +72,9 @@ export default function App() {
      };
  
   return (
-    <SafeAreaView style={styles.container}>
-    <ScrollView style={styles.scrolling}>
+    
+    <ScrollView style={styles.container}
+    contentContainerStyle={styles.scrollviewstyle}>
       
       <View>
       <Text>
@@ -131,7 +132,7 @@ export default function App() {
         </View>
         
     </ScrollView>
-    </SafeAreaView>
+
   );
 }
 
@@ -139,13 +140,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+   
+    marginTop: 30,
+    
+  },
+  scrollviewstyle: {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    
-    
   },
   scrolling: {
    padding: 12,
+  
   
   },
   inputs: {
